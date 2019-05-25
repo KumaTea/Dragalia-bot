@@ -1,0 +1,7 @@
+__pycache__/
+.Python
+MANIFEST
+.ipynb_checkpoints
+.idea
+botapi.txt
+adminid.txt
