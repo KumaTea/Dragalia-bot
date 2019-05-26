@@ -3,5 +3,7 @@ __pycache__/
 MANIFEST
 .ipynb_checkpoints
 .idea
-botapi.txt
-adminid.txt
+admin*
+token*
+localDB.py
+.DS_Store

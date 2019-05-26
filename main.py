@@ -1,22 +1,28 @@
-from flask import Flask, request as flaskreq
-from msgtype import msgtype
+from flask import Flask, request as flask_req
+from botSession import dra, dp
+from telegram import Update
+
 from starting import starting
-from logcsv import logcsv
 
 
 app = Flask(__name__)
 
 
+starting()
+
+
 @app.route('/', methods=['POST'])
 def main():
-    data = flaskreq.json
-    # print(data)
-    resp = msgtype(data)
-    logcsv(data, resp)
+    update = Update.de_json(flask_req.json, dra)
+    dp.process_update(update)
     return '', 200
 
 
+@app.route('/', methods=['GET'])
+def status():
+    return '@Dragalia_bot is online.', 200
+
+
 # If run on local machine:
-starting()
 if __name__ == '__main__':
     app.run(host='localhost', port=10568, debug=False)

@@ -1,5 +1,6 @@
-requests
+tweepy
 flask
-pyscreenshot
-pillow
-pytz
+requests
+python-telegram-bot
+apscheduler
+Pillow

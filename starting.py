@@ -1,47 +1,33 @@
 import os
-from pyproxy import setproxy
+from register import register_handlers, manager
+from botSession import dra, logger, scheduler
+try:
+    from botInfo import frp_url
+except ImportError:
+    frp_url = ''
 
 
-def startlog():
-    if not os.path.exists('log'):
-        os.mkdir('log')
-    else:
-        if os.path.isfile('log/log.old.csv'):
-            os.remove('log/log.old.csv')
-        if os.path.isfile('log/log.csv'):
-            os.rename('log/log.csv', 'log/log.old.csv')
-
-    with open('log/log.csv', 'a') as log:
-        log.write('{},{},{},{},{}\n'.format('date', 'time', 'from', 'request', 'response'))
+def set_frp(url, path=None):
+    return dra.set_webhook(url, path)
 
 
-def setapi():
-    botapi = 'https://api.telegram.org/' + input(
-        'Please input your bot API.\nIt should start with \"bot\", include \":\" and without \"/\".\n') + '/'
-    return botapi
-
-
-def getapi():
-    apiex = os.path.isfile('botapi.txt')
-    if apiex:
-        with open('botapi.txt', 'r') as api:
-            botapi = 'https://api.telegram.org/' + api.read() + '/'
-    else:
-        botapi = setapi()
-    return botapi
-
-
-def getadminid():
-    adminex = os.path.isfile('adminid.txt')
-    if adminex:
-        with open('adminid.txt', 'r') as admid:
-            adminid = int(admid.read())
-    else:
-        adminid = 100000000  # not set!
-    return adminid
+def mkdir(folder=None):
+    if not os.path.exists('../vote'):
+        os.mkdir('../vote')
+    if folder:
+        if type(folder) == list or type(folder) == tuple:
+            for items in folder:
+                if not os.path.exists(str(items)):
+                    os.mkdir(str(items))
+        else:
+            if not os.path.exists(str(folder)):
+                os.mkdir(str(folder))
 
 
 def starting():
-    startlog()
-    setproxy()
-    print('Starting fine.')
+    mkdir(['tmp', 'life'])
+    set_frp(frp_url)
+    register_handlers()
+    manager()
+    scheduler.start()
+    logger.warning('Starting fine.')  # It's actually an info
