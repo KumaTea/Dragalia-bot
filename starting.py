@@ -2,7 +2,7 @@ import os
 from register import register_handlers, manager
 from botSession import dra, logger, scheduler
 try:
-    from botInfo import frp_url
+    from localDB import frp_url
 except ImportError:
     frp_url = ''
 
