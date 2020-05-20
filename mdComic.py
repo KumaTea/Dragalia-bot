@@ -180,7 +180,7 @@ def create_life():
     return life_db
 
 
-def sync_life():
+def sync_life(alert=True):
     need_sync = True
     db_changed = False
     try:
@@ -239,7 +239,7 @@ def sync_life():
             pickle.dump(life_db, file, protocol=4)
         with open('life/life.json', 'w') as file:
             json.dump(life_db, file)
-        if need_sync:
+        if need_sync and alert:
             dra.send_message(player_group, f'轻松龙约第{latest_episode}期更新啦！快点击 /life 阅读吧')
 
     return life_db
@@ -256,9 +256,10 @@ def send_life(chat_id, episode=None, lang='chs'):
     if not episode:
         episode = life_db['latest']
     elif episode < 1:
-        return dra.send_message(chat_id, f'期数{episode}不合法，请重试')
+        return dra.send_message(chat_id, f'期数{episode}不合法，请重试。')
     elif episode > life_db['latest']:
-        return dra.send_message(chat_id, f'第{episode}期暂未更新，请稍后重试')
+        return dra.send_message(chat_id, f'第{episode}期暂未更新，请等待更新或使用 `/life refresh` 强制刷新。',
+                                parse_mode='Markdown')
 
     if lang == 'cover':
         if 'http' in life_db['comic'][episode]['thumbnail_l']:
@@ -335,6 +336,15 @@ def life(update, context):
                 return update.message.reply_text(life_help, quote=False, parse_mode='Markdown')
             elif 'cover' in command[1]:
                 return send_life(chat_id, lang='cover')
+            elif 're' in command[1]:
+                with open('life/life.p', 'rb') as file:
+                    old_db = pickle.load(file)
+                old = old_db['latest']
+                new = sync_life(False)['latest']
+                if new > old:
+                    return update.message.reply_text(f'刷新成功，最新期数为 /life {new}', quote=False)
+                else:
+                    return update.message.reply_text(f'刷新失败，最新期数为{old}。', quote=False)
             else:
                 for lang in languages:
                     if lang in command[1]:

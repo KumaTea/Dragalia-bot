@@ -1,6 +1,6 @@
 name = 'Dragalia Bot'
 self_id = 852069393
-version = '2.4.2.2'
+version = '2.4.3'
 channel = 'cloud'
 
 developer_id = 345060487

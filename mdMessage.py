@@ -11,6 +11,17 @@ special_ids = [
 
 done = ['好了', '可以']
 thanks = ['\u8C22', '\u5C04']
+extension = {
+    'image': {
+        'good': '.webp',
+        'bad': ['.jpg', '.bmp']
+    },
+    # audio
+    'video': {
+        'good': '.mp4',
+        'bad': ['.avi', '.rm']
+    },
+}
 
 
 def process_id(chat_id, message_id):
@@ -23,6 +34,12 @@ def process_id(chat_id, message_id):
 
 def process_keyword(message):
     text = message.text
+    for item in extension:
+        for word in extension[item]['bad']:
+            if word in text:
+                return message.reply_text(
+                    '本群推荐弃用野蛮的 ' + word + ' 格式，使用文明的 ' + extension[item]['good'] + ' 格式。',
+                    quote=False)
     for word in done:
         if f'我{word}' in text:
             return message.reply_text(f'我也{word}', quote=False)
