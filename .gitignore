@@ -7,3 +7,4 @@ admin*
 token*
 localDB.py
 .DS_Store
+.vs
