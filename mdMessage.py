@@ -1,7 +1,8 @@
-from botInfo import self_id
+import botCache
+from time import time
 from botSession import dra
 from mdNGA import nga_link_process
-
+from botInfo import self_id, player_group
 
 special_ids = [
     100, 1000, 10000, 100000, 1000000,
@@ -51,13 +52,20 @@ def process_keyword(message):
     return None
 
 
+def last_msg():
+    botCache.last_msg_time = time()  # int(time())
+
+
 def process_msg(update, context):
     message = update.message
-    # chat_id = message.chat_id
+    chat_id = message.chat_id
     # message_id = message.message_id
     text = message.text
 
     # process_id(chat_id, message_id)
+
+    if chat_id == player_group:
+        last_msg()
 
     if message.caption and not text:
         text = message.caption

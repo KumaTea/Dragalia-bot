@@ -16,3 +16,14 @@ help_ja = f'「ゆるがりあ」を読む /life\n' \
 unavailable_cmd = '这个功能不可用。为什么不试试 /life 呢'
 default_reply = '嗯'
 unknown = 'I can\'t understand your message or command. You may try /help.'
+
+timer_sticker = {
+    0: '',
+    1: '',
+    2: '', 3: '',
+    4: '', 5: '',
+    6: '', 7: '',
+    8: '', 9: '',
+    10: '', 11: '',
+    12: ''
+}

@@ -1,6 +1,7 @@
 from botDB import *
-from datetime import datetime
 from botSession import dra
+from datetime import datetime
+from botInfo import developer_id
 
 
 def delay(update, context):
@@ -38,8 +39,33 @@ def help_ja(update, context):
     return update.message.reply_text(help_ja)
 
 
+def private_get_file_id(update, context):
+    file_id = 'Unknown type of media.'
+    if update.message.text:
+        file_id = update.message.text
+    elif update.message.sticker:
+        file_id = update.message.sticker.file_id
+    elif update.message.photo:
+        file_id = update.message.photo[-1].file_id
+    elif update.message.animation:
+        file_id = update.message.animation.file_id
+    elif update.message.video:
+        file_id = update.message.video.file_id
+    elif update.message.document:
+        file_id = update.message.document.file_id
+    return update.message.reply_text(file_id)
+
+
 def private_default(update, context):
     return update.message.reply_text(default_reply)
+
+
+def private_message(update, context):
+    user_id = update.message.from_user.id
+    if user_id == developer_id:
+        return private_get_file_id(update, context)
+    else:
+        return private_default(update, context)
 
 
 def private_unknown(update, context):

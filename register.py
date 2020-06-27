@@ -20,7 +20,7 @@ def register_handlers():
 
     dp.add_handler(MessageHandler(Filters.group, process_msg))
     dp.add_handler(MessageHandler((Filters.command & Filters.private), private_unknown))
-    dp.add_handler(MessageHandler(Filters.private, private_default))
+    dp.add_handler(MessageHandler(Filters.private, private_message))
 
     return True
 
