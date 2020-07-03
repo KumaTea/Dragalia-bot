@@ -1,6 +1,6 @@
 import botSession
 from mdFunctions import *
-from mdTimer import timer
+from mdTimer import timer as cron_timer
 from mdMessage import process_msg
 from mdComic import life, sync_life
 from botTools import session_update
@@ -31,4 +31,4 @@ def manager():
     scheduler = botSession.scheduler
     scheduler.add_job(session_update, 'cron', [botSession.nga, botSession.nga_token], hour=4)
     scheduler.add_job(sync_life, 'cron', hour=14, minute=1)
-    scheduler.add_job(timer, 'cron', hour='*')
+    scheduler.add_job(cron_timer, 'cron', hour='*')
