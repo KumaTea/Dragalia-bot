@@ -1,6 +1,8 @@
 import os
-from register import register_handlers, manager
+import botCache
+from botDB import groups
 from botSession import dra, logger, scheduler
+from register import register_handlers, manager
 try:
     from localDB import frp_url
 except ImportError:
@@ -26,8 +28,10 @@ def mkdir(folder=None):
 
 def starting():
     mkdir(['tmp', 'life'])
-    set_frp(frp_url)
+    # set_frp(frp_url)
+    for group in groups:
+        botCache.last_msg_time[group] = 0
     register_handlers()
     manager()
     scheduler.start()
-    logger.warning('Starting fine.')  # It's actually an info
+    logger.info('Starting fine.')  # It's actually an info

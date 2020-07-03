@@ -19,8 +19,30 @@ def delay(update, context):
         status = 'good'
     else:
         status = 'bad'
-    result = dra.edit_message_text(f'Delay is {duration}s.\nThe connectivity is {status}.', chat_id, second_msg_id)
-    return result
+    return dra.edit_message_text(f'Delay is {duration}s.\nThe connectivity is {status}.', chat_id, second_msg_id)
+
+
+def timer(update, context):
+    message = update.message
+    chat_id = message.chat_id
+    user_lang = message.from_user.language_code.lower()
+
+    now = datetime.now()
+    lang = None
+    if 'zh' in user_lang:
+        for i in ietf:
+            for j in ietf[i]:
+                if j in user_lang:
+                    lang = i
+                    break
+    if not lang:
+        if chat_id in groups:
+            lang = groups[chat_id]['lang']
+        else:
+            lang = 'chs'
+    hour = int(now.strftime('%I'))
+    sticker = timer_sticker[lang][hour]
+    return dra.send_sticker(chat_id, sticker)
 
 
 def private_start(update, context):

@@ -1,1 +1,1 @@
-last_msg_time = 0
+last_msg_time = {}

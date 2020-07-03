@@ -28,6 +28,6 @@ nga.headers.update(headers)
 nga.cookies.update(cookies)
 
 logger = logging.getLogger('werkzeug')
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.INFO)
 
 scheduler = BackgroundScheduler(misfire_grace_time=60)

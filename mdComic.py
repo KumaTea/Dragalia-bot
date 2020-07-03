@@ -2,6 +2,7 @@ import json
 import pickle
 import requests
 from PIL import Image
+from botDB import ietf, groups
 from botInfo import player_group
 from botSession import dra, logger
 from telegram import InputMediaPhoto
@@ -324,10 +325,23 @@ def life(update, context):
     message = update.message
     chat_id = message.chat_id
     text = message.text
+    user_lang = message.from_user.language_code.lower()
 
     command = text.split(' ')
     if len(command) == 1:
-        return send_life(chat_id)
+        lang = None
+        if 'zh' in user_lang:
+            for i in ietf:
+                for j in ietf[i]:
+                    if j in user_lang:
+                        lang = i
+                        break
+        if not lang:
+            if chat_id in groups:
+                lang = groups[chat_id]['lang']
+            else:
+                lang = 'chs'
+        return send_life(chat_id, lang=lang)
     elif len(command) == 2:
         if command[1].isnumeric():
             return send_life(chat_id, int(command[1]))
