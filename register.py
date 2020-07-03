@@ -17,8 +17,8 @@ def register_handlers():
     dp.add_handler(CommandHandler(['time', 'timer', 'when', 'hour'], timer))
     dp.add_handler(CommandHandler('start', private_start, Filters.private))
     dp.add_handler(CommandHandler('help', private_help, Filters.private))
-    dp.add_handler(CommandHandler(['en', 'Eng', 'English'], help_en, Filters.private))
-    dp.add_handler(CommandHandler(['ja', 'Japanese'], help_ja, Filters.private))
+    dp.add_handler(CommandHandler(['en', 'Eng', 'English'], help_english, Filters.private))
+    dp.add_handler(CommandHandler(['ja', 'Japanese'], help_japanese, Filters.private))
 
     dp.add_handler(MessageHandler(Filters.group, process_msg))
     dp.add_handler(MessageHandler((Filters.command & Filters.private), private_unknown))

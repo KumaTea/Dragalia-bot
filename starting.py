@@ -34,4 +34,4 @@ def starting():
     register_handlers()
     manager()
     scheduler.start()
-    logger.info('Starting fine.')  # It's actually an info
+    logger.warn('Starting fine.')  # It's actually an info

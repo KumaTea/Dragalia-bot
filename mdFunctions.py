@@ -53,11 +53,11 @@ def private_help(update, context):
     return update.message.reply_text(help_message)
 
 
-def help_en(update, context):
+def help_english(update, context):
     return update.message.reply_text(help_en)
 
 
-def help_ja(update, context):
+def help_japanese(update, context):
     return update.message.reply_text(help_ja)
 
 
