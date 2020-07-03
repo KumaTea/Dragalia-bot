@@ -1,8 +1,10 @@
 import botCache
 from time import time
+from botDB import groups
 from botSession import dra
+from botInfo import self_id
 from mdNGA import nga_link_process
-from botInfo import self_id, groups
+
 
 special_ids = [
     100, 1000, 10000, 100000, 1000000,
