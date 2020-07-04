@@ -25,14 +25,14 @@ def delay(update, context):
 def timer(update, context):
     message = update.message
     chat_id = message.chat_id
-    user_lang = message.from_user.language_code.lower()
+    user_lang = message.from_user.language_code
 
     now = datetime.now()
     lang = None
-    if 'zh' in user_lang:
+    if user_lang and 'zh' in user_lang.lower():
         for i in ietf:
             for j in ietf[i]:
-                if j in user_lang:
+                if j in user_lang.lower():
                     lang = i
                     break
     if not lang:
