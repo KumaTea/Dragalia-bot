@@ -2,6 +2,7 @@ from botDB import *
 from botSession import dra
 from datetime import datetime
 from botInfo import developer_id
+from botTools import detect_lang
 
 
 def delay(update, context):
@@ -22,24 +23,12 @@ def delay(update, context):
     return dra.edit_message_text(f'Delay is {duration}s.\nThe connectivity is {status}.', chat_id, second_msg_id)
 
 
-def timer(update, context):
+def send_time(update, context):
     message = update.message
     chat_id = message.chat_id
-    user_lang = message.from_user.language_code
 
     now = datetime.now()
-    lang = None
-    if user_lang and 'zh' in user_lang.lower():
-        for i in ietf:
-            for j in ietf[i]:
-                if j in user_lang.lower():
-                    lang = i
-                    break
-    if not lang:
-        if chat_id in groups:
-            lang = groups[chat_id]['lang']
-        else:
-            lang = 'chs'
+    lang = detect_lang(message)
     hour = int(now.strftime('%I'))
     sticker = timer_sticker[lang][hour]
     return dra.send_sticker(chat_id, sticker)

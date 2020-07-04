@@ -1,6 +1,7 @@
 import json
 import base64
 from botInfo import self_id
+from botDB import groups, lang_code
 # DO NOT IMPORT BOTSESSION
 
 
@@ -42,3 +43,21 @@ def session_update(session, original):
             changed = True
     if changed:
         write_file(json.dumps(original), 'token_nga', True)
+
+
+def detect_lang(message):
+    lang = None
+    chat_id = message.chat_id
+    user_lang = message.from_user.language_code
+    if user_lang and 'zh' in user_lang.lower():
+        for i in lang_code:
+            for j in lang_code[i]:
+                if j in user_lang.lower():
+                    lang = i
+                    break
+    if not lang:
+        if chat_id in groups:
+            lang = groups[chat_id]['lang']
+        else:
+            lang = 'chs'
+    return lang

@@ -30,7 +30,7 @@ groups = {
     }
 }
 
-ietf = {
+lang_code = {
     'chs': ['cn', 'sg', 'chs'],
     'cht': ['hik', 'mo', 'tw', 'cht']
 }

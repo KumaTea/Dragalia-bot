@@ -14,7 +14,7 @@ def register_handlers():
 
     dp.add_handler(CommandHandler(['delay', 'ping'], delay))
     dp.add_handler(CommandHandler(['life', 'comic'], life))
-    dp.add_handler(CommandHandler(['time', 'timer', 'when', 'hour'], timer))
+    dp.add_handler(CommandHandler(['time', 'timer', 'when', 'hour'], send_time))
     dp.add_handler(CommandHandler('start', private_start, Filters.private))
     dp.add_handler(CommandHandler('help', private_help, Filters.private))
     dp.add_handler(CommandHandler(['en', 'Eng', 'English'], help_english, Filters.private))
