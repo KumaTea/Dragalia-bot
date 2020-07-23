@@ -5,6 +5,7 @@ start_message = '/help'
 help_message = f'这个bot可以：抓取和转发新闻到 @DragaliaNews\n' \
                f'获取轻松龙约 /life\n' \
                f'获取NGA论坛链接详情。\n' \
+               f'手动报时 /time\n' \
                f'欢迎加入群组 @dragaliazh\n\n/English /Japanese\n' \
                f'Ver.: {version} ({channel})'
 help_en = f'Read Dragalia Life: /life\n' \
@@ -32,7 +33,7 @@ groups = {
 
 lang_code = {
     'chs': ['cn', 'sg', 'chs'],
-    'cht': ['hik', 'mo', 'tw', 'cht']
+    'cht': ['hk', 'mo', 'tw', 'cht']
 }
 
 timer_sticker = {

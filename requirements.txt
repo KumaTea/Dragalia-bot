@@ -1,4 +1,3 @@
-tweepy
 flask
 requests
 python-telegram-bot
