@@ -1,4 +1,5 @@
 import re
+import time
 from urllib import parse
 from datetime import datetime
 from botSession import dra, nga
@@ -75,6 +76,8 @@ def nga_link_process(message):
                       f'{date} ' \
                       f'[{forum}](https://{nga_domain}/thread.php?fid={forum_id})'
         if title in text:
+            dra.edit_message_text('哦，已经有标题了啊，那没事了……', chat_id, inform_id)
+            time.sleep(5)
             return dra.delete_message(chat_id, inform_id)
         else:
             return dra.edit_message_text(
