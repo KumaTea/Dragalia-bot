@@ -18,6 +18,8 @@ def escape_md(text):
 def nga_link_process(message):
     chat_id = message.chat_id
     text = message.text
+    if not text:
+        return None
 
     nga_domain = None
     if 'http' not in text:

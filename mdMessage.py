@@ -37,6 +37,8 @@ def process_id(chat_id, message_id):
 
 def process_keyword(message):
     text = message.text
+    if message.caption and not text:
+        text = message.caption
     """
     for item in extension:
         for word in extension[item]['bad']:
