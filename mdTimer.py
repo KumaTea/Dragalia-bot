@@ -5,7 +5,7 @@ from datetime import datetime
 from botDB import timer_sticker
 
 
-def timer(lang='chs'):
+def timer():
     now = datetime.now()
     ts = datetime.timestamp(now)
 

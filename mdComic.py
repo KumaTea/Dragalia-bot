@@ -5,7 +5,6 @@ from PIL import Image
 from botTools import detect_lang
 from botInfo import player_group
 from botSession import dra, logger
-from botDB import lang_code, groups
 from telegram import InputMediaPhoto
 
 
@@ -33,82 +32,9 @@ life_help = '格式: /life\n/life <期数>\n/life <语言>\n/life <期数> <语�
             '使用空格分隔参数'
 
 index_url = 'https://comic.dragalialost.com/api/index'
-
-"""
-{'first_episode': '17',
- 'items': [{'episode_num': '191',
-            'id': '806',
-            'main': 'https://dragalialost.akamaized.net/attached/cartoon/images/216998593e2a3acdf7e043229c627a86.png',
-            'thumbnail_l': 'https://dragalialost.akamaized.net/attached/cartoon/images/53e4756bd973c8cf5ec6ce8a8e8b9aac.png',
-            'thumbnail_s': 'https://dragalialost.akamaized.net/attached/cartoon/images/132b0b3068b8e976df695e413a14777a.png',
-            'title': '新年好！'},
-            ...,
-            ],
- 'latest_comic': {'episode_num': '191',
-                  'id': '806',
-                  'main': 'https://dragalialost.akamaized.net/attached/cartoon/images/216998593e2a3acdf7e043229c627a86.png',
-                  'thumbnail_l': 'https://dragalialost.akamaized.net/attached/cartoon/images/53e4756bd973c8cf5ec6ce8a8e8b9aac.png',
-                  'thumbnail_s': 'https://dragalialost.akamaized.net/attached/cartoon/images/132b0b3068b8e976df695e413a14777a.png',
-                  'title': '新年好！'},
- 'pager': {'first': 0,
-           'isPager': True,
-           'isPagerSlider': True,
-           'latest': 3,
-           'newer': 1,
-           'older': 0,
-           'pager': [{'current': True, 'indexText': '191～181', 'pageId': 0},
-                     {'current': False, 'indexText': '180～161', 'pageId': 1},
-                     {'current': False, 'indexText': '160～141', 'pageId': 2}]}}
-"""
-
 detail_url = 'https://comic.dragalialost.com/api/detail/'  # + id
-
-"""
-[{'cartoon': 'https://dragalialost.akamaized.net/attached/cartoon/images/216998593e2a3acdf7e043229c627a86.png',
-  'current_index': 0,
-  'current_page_set': 0,
-  'episode_num': '191',
-  'id': '806',
-  'next_cartoon': {'episode_num': '190', 'id': '801'},
-  'prev_cartoon': {'episode_num': '191', 'id': '806'},
-  'title': '新年好！'}]
-"""
-
 pager_url = 'https://comic.dragalialost.com/api/pager/0/0/'  # + pager
-
-"""
-Same as 'pager' in index_url
-"""
-
 list_url = 'https://comic.dragalialost.com/api/thumbnail_list/'  # + pager
-
-"""
-Same as 'item' in index_url
-"""
-
-
-"""
-life.p
-{
-    'first': 1,
-    'latest': 181,
-    'comic': {
-        1: {
-            'episode_num': 1,
-            'thumbnail_l': 'https://dragalialost.akamaized.net/attached/cartoon/images/foo.png',  # diff among langs
-            'thumbnail_s': 'https://dragalialost.akamaized.net/attached/cartoon/images/bar.png',  # but same files
-            'chs': {
-                'id': 17,
-                'original': 'https://dragalialost.akamaized.net/attached/cartoon/images/chs.png',
-                'title': '',
-                'cover': 'Some_Telegram_File_ID',
-                'content': ['Some_Telegram_File_ID', 'Some_Telegram_File_ID',
-                            'Some_Telegram_File_ID', 'Some_Telegram_File_ID']
-            }
-        }
-    }
-}
-"""
 
 
 def get_episode_index(lang='chs', index='last'):

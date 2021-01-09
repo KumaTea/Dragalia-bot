@@ -1,8 +1,8 @@
 from botDB import *
 from botSession import dra
-from datetime import datetime
 from botInfo import developer_id
 from botTools import detect_lang
+from datetime import datetime, timezone, timedelta
 
 
 def delay(update, context):
@@ -27,7 +27,7 @@ def send_time(update, context):
     message = update.message
     chat_id = message.chat_id
 
-    now = datetime.now()
+    now = datetime.now(timezone(timedelta(hours=8)))
     lang = detect_lang(message)
     hour = int(now.strftime('%I'))
     sticker = timer_sticker[lang][hour]

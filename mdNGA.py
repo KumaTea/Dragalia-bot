@@ -1,8 +1,8 @@
 import re
 import time
 from urllib import parse
-from datetime import datetime
 from botSession import dra, nga
+from datetime import datetime, timezone, timedelta
 
 
 nga_url = ['nga.178.com', 'bbs.nga.cn', 'ngabbs.com']
@@ -28,12 +28,12 @@ def nga_link_process(message):
             if domain in text:
                 nga_domain = domain
                 text = text.replace(domain, f'https://{domain}')
-                url = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+                url = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
                                  text)[0]
         if not nga_domain:
             return None
     else:
-        url = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
+        url = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
         if url:
             url = url[0]
         else:
@@ -69,7 +69,8 @@ def nga_link_process(message):
         title = escape_md(result_data['__T']['subject'])
         author = result_data['__T']['author']
         author_id = result_data['__T']['authorid']
-        date = datetime.fromtimestamp(result_data['__T']['postdate']).strftime('%m-%d %H:%M')
+        date = datetime.fromtimestamp(
+            result_data['__T']['postdate'], tz=timezone(timedelta(hours=8))).strftime('%m-%d %H:%M')
         forum = result_data['__F']['name']
         forum_id = result_data['__T']['fid']
 

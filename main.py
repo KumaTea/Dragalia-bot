@@ -1,8 +1,7 @@
-from flask import Flask, request as flask_req
-from botSession import dra, dp
 from telegram import Update
-
 from starting import starting
+from botSession import dra, dp
+from flask import Flask, request as flask_req
 
 
 app = Flask(__name__)

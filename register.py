@@ -15,14 +15,14 @@ def register_handlers():
     dp.add_handler(CommandHandler(['delay', 'ping'], delay))
     dp.add_handler(CommandHandler(['life', 'comic'], life))
     dp.add_handler(CommandHandler(['time', 'timer', 'when', 'hour'], send_time))
-    dp.add_handler(CommandHandler('start', private_start, Filters.private))
-    dp.add_handler(CommandHandler('help', private_help, Filters.private))
-    dp.add_handler(CommandHandler(['en', 'Eng', 'English'], help_english, Filters.private))
-    dp.add_handler(CommandHandler(['ja', 'Japanese'], help_japanese, Filters.private))
+    dp.add_handler(CommandHandler('start', private_start, Filters.chat_type.private))
+    dp.add_handler(CommandHandler('help', private_help, Filters.chat_type.private))
+    dp.add_handler(CommandHandler(['en', 'Eng', 'English'], help_english, Filters.chat_type.private))
+    dp.add_handler(CommandHandler(['ja', 'Japanese'], help_japanese, Filters.chat_type.private))
 
-    dp.add_handler(MessageHandler(Filters.group, process_msg))
-    dp.add_handler(MessageHandler((Filters.command & Filters.private), private_unknown))
-    dp.add_handler(MessageHandler(Filters.private, private_message))
+    dp.add_handler(MessageHandler(Filters.chat_type.groups, process_msg))
+    dp.add_handler(MessageHandler((Filters.command & Filters.chat_type.private), private_unknown))
+    dp.add_handler(MessageHandler(Filters.chat_type.private, private_message))
 
     return True
 

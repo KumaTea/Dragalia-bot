@@ -91,7 +91,7 @@ def recover_vote(callback_query):
         vote_json['options'][option] = []
         vote_json['info']['options'].append(option)
         if option_text != option:
-            if [int(s) for s in option_text.split() if s.isdigit()] != []:  # DO NOT CORRECT IT, IGNORE PYCHARM'S TIP
+            if [int(s) for s in option_text.split() if s.isdigit()] is not []:
                 member_count = [int(s) for s in option_text.split() if s.isdigit()][-1]
                 vote_json['info']['participants'] += member_count
                 for i in range(member_count):
