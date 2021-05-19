@@ -24,11 +24,11 @@ groups = {
         'username': 'dragaliazh',
         'lang': 'chs'
     },
-    -1001342436432: {
-        'id': -1001342436432,
-        'username': 'Dragalia_Lost',
-        'lang': 'cht'
-    }
+    #-1001342436432: {
+    #    'id': -1001342436432,
+    #    'username': 'Dragalia_Lost',
+    #    'lang': 'cht'
+    #}
 }
 
 lang_code = {

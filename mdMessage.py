@@ -6,10 +6,15 @@ from botInfo import self_id
 from mdNGA import nga_link_process
 
 
+"""
 special_ids = [
-    100, 1000, 10000, 100000, 1000000,
-    114514, 1919, 810, 1919810, 1145141919,
+    100, 1000, 10000, 100000, 1000000
 ]
+for i in special_ids.copy():
+    for j in range(1, 9):
+        special_ids.append(i*j)
+special_ids.extend([114514, 1919, 810, 1919810])
+"""
 
 
 done = ['好了', '可以']
@@ -62,8 +67,11 @@ def last_msg(chat_id):
 
 def process_msg(update, context):
     message = update.message
-    chat_id = message.chat_id
-    # message_id = message.message_id
+    try:
+        chat_id = message.chat_id
+    except:
+        return print(f'\n\n{update}\n\n')
+    message_id = message.message_id
     text = message.text
 
     # process_id(chat_id, message_id)
