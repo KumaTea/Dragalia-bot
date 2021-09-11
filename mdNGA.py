@@ -6,7 +6,8 @@ from mdScreen import get_screenshot
 from datetime import datetime, timezone, timedelta
 
 
-nga_url = ['nga.178.com', 'bbs.nga.cn', 'ngabbs.com']
+nga_domains = ['nga.178.com', 'bbs.nga.cn', 'ngabbs.com']
+url_regex = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
 
 def escape_md(text):
@@ -25,25 +26,22 @@ def nga_link_process(message):
     nga_domain = None
     if 'http' not in text:
         url = ''
-        for domain in nga_url:
+        for domain in nga_domains:
             if domain in text:
                 nga_domain = domain
                 text = text.replace(domain, f'https://{domain}')
-                url = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
-                                 text)[0]
+                url = re.findall(url_regex, text)[0]
         if not nga_domain:
             return None
     else:
-        url = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
+        url = re.findall(url_regex, text)
         if url:
             url = url[0]
         else:
             return None
-        for domain in nga_url:
-            if domain in url:
-                nga_domain = domain
-        if not nga_domain:
-            return None
+    url_domain = parse.urlparse(url).netloc
+    if url_domain not in nga_domains:
+        return None
     url = url.replace('http://', 'https://')
     if '&' in url:
         params = parse.parse_qs(parse.urlparse(url).query)

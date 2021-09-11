@@ -1,3 +1,4 @@
+import os
 import json
 import base64
 from botInfo import self_id
@@ -43,6 +44,19 @@ def session_update(session, original):
             changed = True
     if changed:
         write_file(json.dumps(original), 'token_nga', True)
+
+
+def mkdir(folder=None):
+    if not os.path.exists('../vote'):
+        os.mkdir('../vote')
+    if folder:
+        if type(folder) == list or type(folder) == tuple:
+            for items in folder:
+                if not os.path.exists(str(items)):
+                    os.mkdir(str(items))
+        else:
+            if not os.path.exists(str(folder)):
+                os.mkdir(str(folder))
 
 
 def detect_lang(message):

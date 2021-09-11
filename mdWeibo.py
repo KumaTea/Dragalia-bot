@@ -1,10 +1,12 @@
 import re
+from urllib import parse
 from botSession import dra
 from mdScreen import get_screenshot
 
 
-weibo_url = ['weibo.com', 'www.weibo.com', 'm.weibo.com',
-           'weibo.cn', 'www.weibo.cn', 'm.weibo.cn']
+weibo_domains = ['weibo.com', 'www.weibo.com', 'm.weibo.com',
+                 'weibo.cn', 'www.weibo.cn', 'm.weibo.cn']
+url_regex = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
 
 def escape_md(text):
@@ -23,25 +25,22 @@ def weibo_link_process(message):
     weibo_domain = None
     if 'http' not in text:
         url = ''
-        for domain in weibo_url:
+        for domain in weibo_domains:
             if domain in text:
                 weibo_domain = domain
                 text = text.replace(domain, f'https://{domain}')
-                url = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
-                                 text)[0]
+                url = re.findall(url_regex, text)[0]
         if not weibo_domain:
             return None
     else:
-        url = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
+        url = re.findall(url_regex, text)
         if url:
             url = url[0]
         else:
             return None
-        for domain in weibo_url:
-            if domain in url:
-                weibo_domain = domain
-        if not weibo_domain:
-            return None
+    url_domain = parse.urlparse(url).netloc
+    if url_domain not in weibo_domains:
+        return None
     url = url.replace('http://', 'https://')
 
     inform = dra.send_message(chat_id, 'Weibo link found. Retrieving...')
