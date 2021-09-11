@@ -1,6 +1,5 @@
 import botSession
 from mdFunctions import *
-from mdTimer import timer as cron_timer
 from mdMessage import process_msg
 from mdComic import life, sync_life
 from botTools import session_update

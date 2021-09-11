@@ -3,18 +3,16 @@ from time import time
 from botDB import groups
 from botSession import dra
 from botInfo import self_id
-from mdNGA import nga_link_process
+from mdLink import link_process
 
 
-"""
 special_ids = [
     100, 1000, 10000, 100000, 1000000
 ]
 for i in special_ids.copy():
-    for j in range(1, 9):
+    for j in range(1, 10):
         special_ids.append(i*j)
 special_ids.extend([114514, 1919, 810, 1919810])
-"""
 
 
 done = ['好了', '可以']
@@ -69,20 +67,20 @@ def process_msg(update, context):
     message = update.message
     try:
         chat_id = message.chat_id
-    except:
-        return print(f'\n\n{update}\n\n')
+    except AttributeError:
+        return None  # edited message
     message_id = message.message_id
     text = message.text
 
     # process_id(chat_id, message_id)
 
-    if chat_id in groups:
-        last_msg(chat_id)
+    # if chat_id in groups:
+    #     last_msg(chat_id)
 
     if message.caption and not text:
         text = message.caption
     if text:
         process_keyword(message)
-        return nga_link_process(message)
+        return link_process(message)
     else:
         return None

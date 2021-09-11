@@ -2,6 +2,7 @@ import re
 import time
 from urllib import parse
 from botSession import dra, nga
+from mdScreen import get_screenshot
 from datetime import datetime, timezone, timedelta
 
 
@@ -54,6 +55,7 @@ def nga_link_process(message):
             url = f'https://bbs.nga.cn/read.php?tid={thread_id}'
         else:
             return False
+    url_for_screenshot = url
     url += '&__output=11'
 
     inform = dra.send_message(chat_id, 'NGA link found. Retrieving...')
@@ -83,5 +85,7 @@ def nga_link_process(message):
             time.sleep(5)
             return dra.delete_message(chat_id, inform_id)
         else:
-            return dra.edit_message_text(
-                link_result, chat_id, inform_id, parse_mode='Markdown', disable_web_page_preview=True)
+            dra.send_chat_action(chat_id, 'upload_photo')
+            screenshot = get_screenshot(url_for_screenshot)
+            dra.delete_message(chat_id, inform_id)
+            return dra.send_photo(chat_id, screenshot,  caption=link_result, parse_mode='Markdown')
