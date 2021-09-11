@@ -88,4 +88,4 @@ def nga_link_process(message):
             dra.send_chat_action(chat_id, 'upload_photo')
             screenshot = get_screenshot(url_for_screenshot)
             dra.delete_message(chat_id, inform_id)
-            return dra.send_photo(chat_id, screenshot,  caption=link_result, parse_mode='Markdown')
+            return dra.send_photo(chat_id, screenshot, caption=link_result, parse_mode='Markdown')
