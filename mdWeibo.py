@@ -1,6 +1,7 @@
 import re
 from urllib import parse
 from botSession import dra
+from botDB import url_blacklist
 from mdScreen import get_screenshot
 
 
@@ -41,6 +42,9 @@ def weibo_link_process(message):
     url_domain = parse.urlparse(url).netloc
     if url_domain not in weibo_domains:
         return None
+    for keyword in url_blacklist:
+        if keyword in url:
+            return None
     url = url.replace('http://', 'https://')
 
     inform = dra.send_message(chat_id, 'Weibo link found. Retrieving...')

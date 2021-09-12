@@ -2,6 +2,7 @@ import re
 import time
 from urllib import parse
 from botSession import dra, nga
+from botDB import url_blacklist
 from mdScreen import get_screenshot
 from datetime import datetime, timezone, timedelta
 
@@ -42,6 +43,9 @@ def nga_link_process(message):
     url_domain = parse.urlparse(url).netloc
     if url_domain not in nga_domains:
         return None
+    for keyword in url_blacklist:
+        if keyword in url:
+            return None
     url = url.replace('http://', 'https://')
     if '&' in url:
         params = parse.parse_qs(parse.urlparse(url).query)

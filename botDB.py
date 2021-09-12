@@ -70,3 +70,9 @@ timer_sticker = {
         12: 'CAACAgUAAxkBAAIKgF7-rQbnTItxThVpaYnkd8aPzCRYAAKfAAOHNJEUOQeTDslXCCQaBA'
     }
 }
+
+
+url_blacklist = [
+    'nuke', 'setting', 'message', 'compose',
+    'login', 'logout', 'sign', 'register'
+]
