@@ -1,8 +1,10 @@
 import re
 from urllib import parse
+from random import choice
 from botSession import dra
-from botDB import url_blacklist
 from mdScreen import get_screenshot
+from telegram import InputMediaPhoto
+from botDB import url_blacklist, loading_image
 
 
 weibo_domains = ['weibo.com', 'www.weibo.com', 'm.weibo.com',
@@ -47,10 +49,12 @@ def weibo_link_process(message):
             return None
     url = url.replace('http://', 'https://')
 
-    inform = dra.send_message(chat_id, 'Weibo link found. Retrieving...')
+    # inform = dra.send_message(chat_id, 'Weibo link found. Retrieving...')
+    inform = dra.send_photo(chat_id, choice(loading_image), caption='Weibo link found. Retrieving...')
     inform_id = inform.message_id
 
     dra.send_chat_action(chat_id, 'upload_photo')
     screenshot = get_screenshot(url)
-    dra.delete_message(chat_id, inform_id)
-    return dra.send_photo(chat_id, screenshot)
+    # dra.delete_message(chat_id, inform_id)
+    # return dra.send_photo(chat_id, screenshot)
+    return dra.edit_message_media(chat_id, inform_id, media=InputMediaPhoto(screenshot))
