@@ -12,3 +12,8 @@ def get_screenshot(url, delay=1):
     sleep(delay)
     screenshot = driver.get_screenshot_as_png()
     return BytesIO(screenshot)
+
+
+def reset_browser():
+    driver.get('about:blank')
+    return True

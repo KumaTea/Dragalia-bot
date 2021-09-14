@@ -72,6 +72,11 @@ timer_sticker = {
 }
 
 
+url_regex = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+nga_domains = ['nga.178.com', 'bbs.nga.cn', 'ngabbs.com']
+weibo_domains = ['weibo.com', 'www.weibo.com', 'm.weibo.com',
+                 'weibo.cn', 'www.weibo.cn', 'm.weibo.cn']
+
 url_blacklist = [
     'nuke', 'setting', 'message', 'compose',
     'login', 'logout', 'sign', 'register'

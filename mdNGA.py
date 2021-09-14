@@ -3,14 +3,10 @@ import time
 from urllib import parse
 from random import choice
 from botSession import dra, nga
-from mdScreen import get_screenshot
 from telegram import InputMediaPhoto
-from botDB import url_blacklist, loading_image
 from datetime import datetime, timezone, timedelta
-
-
-nga_domains = ['nga.178.com', 'bbs.nga.cn', 'ngabbs.com']
-url_regex = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+from mdScreen import get_screenshot, reset_browser
+from botDB import url_blacklist, loading_image, url_regex, nga_domains
 
 
 def escape_md(text):
@@ -43,7 +39,7 @@ def nga_link_process(message):
         else:
             return None
     url_domain = parse.urlparse(url).netloc
-    if url_domain not in nga_domains:
+    if url_domain.lower() not in nga_domains:
         return None
     for keyword in url_blacklist:
         if keyword in url:
@@ -99,4 +95,5 @@ def nga_link_process(message):
             # return dra.send_photo(chat_id, screenshot, caption=link_result, parse_mode='Markdown')
             dra.edit_message_media(chat_id, inform_id, media=InputMediaPhoto(screenshot))
             dra.edit_message_caption(chat_id, inform_id, caption=link_result, parse_mode='Markdown')
+            reset_browser()
             return True

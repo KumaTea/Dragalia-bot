@@ -2,14 +2,9 @@ import re
 from urllib import parse
 from random import choice
 from botSession import dra
-from mdScreen import get_screenshot
 from telegram import InputMediaPhoto
-from botDB import url_blacklist, loading_image
-
-
-weibo_domains = ['weibo.com', 'www.weibo.com', 'm.weibo.com',
-                 'weibo.cn', 'www.weibo.cn', 'm.weibo.cn']
-url_regex = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+from mdScreen import get_screenshot, reset_browser
+from botDB import url_blacklist, loading_image, url_regex, weibo_domains
 
 
 def escape_md(text):
@@ -42,7 +37,7 @@ def weibo_link_process(message):
         else:
             return None
     url_domain = parse.urlparse(url).netloc
-    if url_domain not in weibo_domains:
+    if url_domain.lower() not in weibo_domains:
         return None
     for keyword in url_blacklist:
         if keyword in url:
@@ -57,4 +52,6 @@ def weibo_link_process(message):
     screenshot = get_screenshot(url)
     # dra.delete_message(chat_id, inform_id)
     # return dra.send_photo(chat_id, screenshot)
-    return dra.edit_message_media(chat_id, inform_id, media=InputMediaPhoto(screenshot))
+    dra.edit_message_media(chat_id, inform_id, media=InputMediaPhoto(screenshot))
+    reset_browser()
+    return True
