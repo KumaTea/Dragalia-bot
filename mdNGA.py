@@ -4,6 +4,7 @@ from urllib import parse
 from random import choice
 from botSession import dra, nga
 from telegram import InputMediaPhoto
+from botTools import mention_other_bot
 from datetime import datetime, timezone, timedelta
 from mdScreen import get_screenshot, reset_browser
 from botDB import url_blacklist, loading_image, url_regex, nga_domains
@@ -57,6 +58,8 @@ def nga_link_process(message):
             return False
     url_for_screenshot = url
     url += '&__output=11'
+    if mention_other_bot(text, url_for_screenshot):
+        return None
 
     # inform = dra.send_message(chat_id, 'NGA link found. Retrieving...')
     inform = dra.send_photo(chat_id, choice(loading_image), caption='NGA link found. Retrieving...')

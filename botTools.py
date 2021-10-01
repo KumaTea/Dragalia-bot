@@ -1,8 +1,8 @@
 import os
 import json
 import base64
-from botInfo import self_id
 from botDB import groups, lang_code
+from botInfo import self_id, username
 # DO NOT IMPORT BOTSESSION
 
 
@@ -75,3 +75,10 @@ def detect_lang(message):
         else:
             lang = 'chs'
     return lang
+
+
+def mention_other_bot(text, url):
+    text = text.lower()
+    if ('@' in text and '@' not in url) and ('bot' in text and username.lower() not in text):
+        return True
+    return False

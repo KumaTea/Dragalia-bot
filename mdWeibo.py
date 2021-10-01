@@ -3,6 +3,7 @@ from urllib import parse
 from random import choice
 from botSession import dra
 from telegram import InputMediaPhoto
+from botTools import mention_other_bot
 from mdScreen import get_screenshot, reset_browser
 from botDB import url_blacklist, loading_image, url_regex, weibo_domains
 
@@ -43,6 +44,8 @@ def weibo_link_process(message):
         if keyword in url:
             return None
     url = url.replace('http://', 'https://')
+    if mention_other_bot(text, url):
+        return None
 
     # inform = dra.send_message(chat_id, 'Weibo link found. Retrieving...')
     inform = dra.send_photo(chat_id, choice(loading_image), caption='Weibo link found. Retrieving...')
