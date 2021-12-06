@@ -93,3 +93,5 @@ loading_image = [
     'AgACAgQAAx0ESGhsZQADqGE_f9S3RAq02zyDENDd94Crv-CoAALSrDEb1j_9UZngiGlZVqKvAQADAgADeAADIAQ',  # 342
     'AgACAgQAAx0ESGhsZQADqmE_f-tVp77emB_00Nc0SMuIqY8UAAL-rDEbuwX8UQYdSHbpqh9CAQADAgADeAADIAQ',  # 381
 ]
+
+notify_path = '/usr/local/bin/notify'

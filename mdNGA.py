@@ -1,13 +1,14 @@
 import re
 import time
+import subprocess
+from botDB import *
 from urllib import parse
 from random import choice
-from botSession import dra, nga
 from telegram import InputMediaPhoto
 from botTools import mention_other_bot
+from botSession import dra, nga, driver
 from datetime import datetime, timezone, timedelta
 from mdScreen import get_screenshot, reset_browser
-from botDB import url_blacklist, loading_image, url_regex, nga_domains
 
 
 def escape_md(text):
@@ -100,3 +101,15 @@ def nga_link_process(message):
             dra.edit_message_caption(chat_id, inform_id, caption=link_result, parse_mode='Markdown')
             reset_browser()
             return True
+
+
+def check_nga_login():
+    login_success_text = 'KumaTea'
+    driver.get(f'https://{nga_domains[1]}/')  # 'bbs.nga.cn'
+    if login_success_text in driver.page_source:
+        result = True
+    else:
+        result = False
+        subprocess.run([notify_path, '[DRA] NGA login failed'])
+    reset_browser()
+    return result
