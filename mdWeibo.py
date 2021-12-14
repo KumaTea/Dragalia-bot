@@ -2,9 +2,9 @@ import re
 from urllib import parse
 from random import choice
 from botSession import dra
+from mdScreen import get_screenshot
 from telegram import InputMediaPhoto
 from botTools import mention_other_bot
-from mdScreen import get_screenshot, reset_browser
 from botDB import url_blacklist, loading_image, url_regex, weibo_domains
 
 
@@ -53,8 +53,10 @@ def weibo_link_process(message):
 
     dra.send_chat_action(chat_id, 'upload_photo')
     screenshot = get_screenshot(url)
-    # dra.delete_message(chat_id, inform_id)
-    # return dra.send_photo(chat_id, screenshot)
-    dra.edit_message_media(chat_id, inform_id, media=InputMediaPhoto(screenshot))
-    reset_browser()
+    if screenshot:
+        # dra.delete_message(chat_id, inform_id)
+        # return dra.send_photo(chat_id, screenshot)
+        dra.edit_message_media(chat_id, inform_id, media=InputMediaPhoto(screenshot))
+    else:
+        dra.edit_message_caption(chat_id, inform_id, caption='__截图获取失败！__', parse_mode='Markdown')
     return True

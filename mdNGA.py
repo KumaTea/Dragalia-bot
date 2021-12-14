@@ -4,11 +4,11 @@ import subprocess
 from botDB import *
 from urllib import parse
 from random import choice
+from mdScreen import get_screenshot
 from telegram import InputMediaPhoto
 from botTools import mention_other_bot
 from botSession import dra, nga, driver
 from datetime import datetime, timezone, timedelta
-from mdScreen import get_screenshot, reset_browser
 
 
 def escape_md(text):
@@ -95,11 +95,13 @@ def nga_link_process(message):
         else:
             dra.send_chat_action(chat_id, 'upload_photo')
             screenshot = get_screenshot(url_for_screenshot)
-            # dra.delete_message(chat_id, inform_id)
-            # return dra.send_photo(chat_id, screenshot, caption=link_result, parse_mode='Markdown')
-            dra.edit_message_media(chat_id, inform_id, media=InputMediaPhoto(screenshot))
-            dra.edit_message_caption(chat_id, inform_id, caption=link_result, parse_mode='Markdown')
-            reset_browser()
+            if screenshot:
+                # dra.delete_message(chat_id, inform_id)
+                # return dra.send_photo(chat_id, screenshot, caption=link_result, parse_mode='Markdown')
+                dra.edit_message_media(chat_id, inform_id, media=InputMediaPhoto(screenshot))
+                dra.edit_message_caption(chat_id, inform_id, caption=link_result, parse_mode='Markdown')
+            else:
+                dra.edit_message_caption(chat_id, inform_id, caption=f'{link_result}\n__截图获取失败！__', parse_mode='Markdown')
             return True
 
 
@@ -111,5 +113,5 @@ def check_nga_login():
     else:
         result = False
         subprocess.run([notify_path, '[DRA] NGA login failed'])
-    reset_browser()
+    driver.close()
     return result
