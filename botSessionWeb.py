@@ -23,4 +23,6 @@ preferences = {'download_restrictions': 3}
 # disable all downloads: https://chromeenterprise.google/policies/?policy=DownloadRestrictions
 options.add_experimental_option('prefs', preferences)
 
-driver = wd.Chrome(executable_path='/usr/local/bin/chromedriver', options=options)
+
+def get_driver():
+    return wd.Chrome(executable_path='/usr/local/bin/chromedriver', options=options)

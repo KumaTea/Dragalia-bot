@@ -7,7 +7,7 @@ from random import choice
 from mdScreen import get_screenshot
 from telegram import InputMediaPhoto
 from botTools import mention_other_bot
-from botSession import dra, nga, driver
+from botSession import dra, nga, get_driver
 from datetime import datetime, timezone, timedelta
 
 
@@ -107,11 +107,12 @@ def nga_link_process(message):
 
 def check_nga_login():
     login_success_text = 'KumaTea'
+    driver = get_driver()
     driver.get(f'https://{nga_domains[1]}/')  # 'bbs.nga.cn'
     if login_success_text in driver.page_source:
         result = True
     else:
         result = False
         subprocess.run([notify_path, '[DRA] NGA login failed'])
-    driver.close()
+    driver.quit()
     return result

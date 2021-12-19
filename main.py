@@ -1,7 +1,7 @@
 from telegram import Update
 from starting import starting
+from botSession import dra, dp
 from flask import Flask, request as flask_req
-from botSession import dra, dp, driver, logger
 
 
 app = Flask(__name__)
@@ -24,8 +24,4 @@ def status():
 
 # If run on local machine:
 if __name__ == '__main__':
-    try:
-        app.run(host='localhost', port=10568, debug=False)
-    except KeyboardInterrupt:
-        driver.quit()
-        logger.warning('Exited.')
+    app.run(host='localhost', port=10568, debug=False)
