@@ -1,10 +1,11 @@
 import json
 import pickle
+import logging
 import requests
 from PIL import Image
+from botSession import dra
 from botTools import detect_lang
 from botInfo import player_group
-from botSession import dra, logger
 from telegram import InputMediaPhoto
 
 
@@ -104,7 +105,7 @@ def create_life():
                 comic_id = int(comic_detail['prev_cartoon']['id'])
                 if comic_id == int(comic_detail['id']):
                     break
-    logger.info('Created new life_db')
+    logging.info('Created new life_db')
     return life_db
 
 

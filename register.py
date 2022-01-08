@@ -1,16 +1,12 @@
 import botSession
 from mdFunctions import *
-from mdNGA import check_nga_login
 from mdMessage import process_msg
 from mdComic import life, sync_life
-from botTools import session_update
-from voteProcessor import process_callback
-from telegram.ext import MessageHandler, CommandHandler, CallbackQueryHandler, Filters
+from telegram.ext import MessageHandler, CommandHandler, Filters
 
 
 def register_handlers():
     dp = botSession.dp
-    dp.add_handler(CallbackQueryHandler(process_callback))
 
     dp.add_handler(CommandHandler(['delay', 'ping'], delay))
     dp.add_handler(CommandHandler(['life', 'comic'], life))
@@ -29,7 +25,4 @@ def register_handlers():
 
 def manager():
     scheduler = botSession.scheduler
-    scheduler.add_job(session_update, 'cron', [botSession.nga, botSession.nga_token], hour=4)
     scheduler.add_job(sync_life, 'cron', hour=14, minute=1)
-    scheduler.add_job(check_nga_login, 'cron', minute=30)
-    # scheduler.add_job(cron_timer, 'cron', hour='*')

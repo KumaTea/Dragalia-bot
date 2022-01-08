@@ -1,10 +1,8 @@
-import logging as logger
 from queue import Queue
 from telegram import Bot
 from botInfo import self_id
 from botTools import query_token
 from telegram.ext import Dispatcher
-from botSessionWeb import nga, nga_token, get_driver
 from apscheduler.schedulers.background import BackgroundScheduler
 
 

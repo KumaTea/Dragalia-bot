@@ -1,8 +1,7 @@
 import os
-import json
 import base64
+from botInfo import self_id
 from botDB import groups, lang_code
-from botInfo import self_id, username
 # DO NOT IMPORT BOTSESSION
 
 
@@ -28,22 +27,6 @@ def write_file(content, filename, encrypt=False):
 
 def query_token(token_id=self_id):
     return read_file(f'token_{token_id}', True)
-
-
-def session_update(session, original):
-    changed = False
-    session_headers = session.headers
-    session_cookies = session.cookies.get_dict()
-    for item in original['headers']:
-        if original['headers'][item] != session_headers[item]:
-            original['headers'][item] = session_headers[item]
-            changed = True
-    for item in original['cookies']:
-        if original['cookies'][item] != session_cookies[item]:
-            original['cookies'][item] = session_cookies[item]
-            changed = True
-    if changed:
-        write_file(json.dumps(original), 'token_nga', True)
 
 
 def mkdir(folder=None):
@@ -75,10 +58,3 @@ def detect_lang(message):
         else:
             lang = 'chs'
     return lang
-
-
-def mention_other_bot(text, url):
-    text = text.lower()
-    if ('@' in text and '@' not in url) and ('bot' in text and username.lower() not in text):
-        return True
-    return False

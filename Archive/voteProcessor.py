@@ -25,8 +25,8 @@ def process_callback(update, context):
 
     # STEP 1: Processing data
 
-    if os.path.isfile('../vote/vote.json'):
-        with open('../vote/vote.json', 'r') as file:
+    if os.path.isfile('../../vote/vote.json'):
+        with open('../../vote/vote.json', 'r') as file:
             vote_data = json.load(file)
             if vote_id in vote_data:
                 vote_json = vote_data[vote_id]
@@ -45,7 +45,7 @@ def process_callback(update, context):
         vote_json, choice_result = process_vote_choice(vote_json, user_id, choice)
 
     vote_data[vote_id] = vote_json
-    with open('../vote/vote.json', 'w') as file:
+    with open('../../vote/vote.json', 'w') as file:
         json.dump(vote_data, file)
 
     # STEP 1 END
@@ -97,10 +97,10 @@ def recover_vote(callback_query):
                 for i in range(member_count):
                     vote_json['options'][option].append(i+1)
 
-    with open('../vote/vote.json', 'r') as file:
+    with open('../../vote/vote.json', 'r') as file:
         vote_data = json.load(file)
     vote_data[vote_id] = vote_json
-    with open('../vote/vote.json', 'w') as file:
+    with open('../../vote/vote.json', 'w') as file:
         json.dump(vote_data, file)
 
     return vote_json

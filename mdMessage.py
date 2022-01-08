@@ -1,9 +1,8 @@
 import botCache
 from time import time
-from botDB import groups
+# from botDB import groups
 from botSession import dra
 from botInfo import self_id
-from mdLink import link_process
 
 
 special_ids = [
@@ -80,7 +79,6 @@ def process_msg(update, context):
     if message.caption and not text:
         text = message.caption
     if text:
-        process_keyword(message)
-        return link_process(message)
+        return process_keyword(message)
     else:
         return None

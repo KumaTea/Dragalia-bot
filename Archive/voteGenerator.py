@@ -22,10 +22,10 @@ def create_vote(options, output='all'):
     for item in options:
         vote_json['options'][item] = []
 
-    with open('../vote/vote.json', 'r') as file:
+    with open('../../vote/vote.json', 'r') as file:
         vote_data = json.load(file)
     vote_data[vote_id] = vote_json
-    with open('../vote/vote.json', 'w') as file:
+    with open('../../vote/vote.json', 'w') as file:
         json.dump(vote_data, file)
 
     if 'id' in output:
@@ -47,7 +47,7 @@ def gen_reply_markup(vote_id, options=None, new=False, vote_json=None):
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
     else:
         if not vote_json:
-            with open('../vote/vote.json', 'r') as file:
+            with open('../../vote/vote.json', 'r') as file:
                 vote_data = json.load(file)
             vote_json = vote_data[vote_id]
         options = vote_json['info']['options']

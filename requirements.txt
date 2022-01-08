@@ -3,4 +3,3 @@ requests
 python-telegram-bot
 apscheduler
 Pillow
-selenium

@@ -1,7 +1,8 @@
 # import botCache
 # from botDB import groups
+import logging
 from botTools import mkdir
-from botSession import dra, logger, scheduler
+from botSession import scheduler
 from register import register_handlers, manager
 
 
@@ -12,4 +13,4 @@ def starting():
     register_handlers()
     manager()
     scheduler.start()
-    logger.warning('Starting fine.')
+    logging.warning('Starting fine.')
