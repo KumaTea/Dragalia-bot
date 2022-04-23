@@ -5,3 +5,5 @@ token*
 local*
 *.ini
 life
+tmp
+*.session

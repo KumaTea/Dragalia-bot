@@ -165,7 +165,7 @@ def sync_life(alert=True):
     if db_changed:
         life_db['comic'] = dict(sorted(life_db['comic'].items()))
         with open('life/life.p', 'wb') as file:
-            pickle.dump(life_db, file, protocol=4)
+            pickle.dump(life_db, file, protocol=5)
         with open('life/life.json', 'w') as file:
             json.dump(life_db, file)
         if need_sync and alert:
@@ -195,7 +195,7 @@ def send_life(chat_id, episode=None, lang='chs'):
             cover = dra.send_photo(
                 chat_id, life_db['comic'][episode]['thumbnail_l'], caption=(
                         life_name['chs'] + f' {episode} ' + life_db['comic'][episode]['chs']['title']))
-            cover_id = cover.photo[-1].file_id
+            cover_id = cover.photo.file_id
             life_db['comic'][episode]['thumbnail_l'] = cover_id
             # db_changed = True
         else:
@@ -214,24 +214,22 @@ def send_life(chat_id, episode=None, lang='chs'):
         else:
             dra.send_chat_action(chat_id, 'upload_photo')
             cover, content = process_image(life_db['comic'][episode][lang]['original'])
-            with open(cover, 'rb') as image:
-                cover_id = dra.send_photo(chat_id, image, caption=(
-                        life_name[lang] + f' {episode} ' + life_db['comic'][episode][lang]['title'])).photo[-1].file_id
+            cover_id = dra.send_photo(chat_id, cover, caption=(
+                    life_name[lang] + f' {episode} ' + life_db['comic'][episode][lang]['title'])).photo.file_id
             content_group = []
             for i in content:
-                with open(i, 'rb') as image:
-                    content_group.append(InputMediaPhoto(image))
+                content_group.append(InputMediaPhoto(i))
             content_group_id = dra.send_media_group(chat_id, content_group)
             content_id = []
             for msg in content_group_id:
-                content_id.append(msg.photo[-1].file_id)
+                content_id.append(msg.photo.file_id)
             life_db['comic'][episode][lang]['cover'] = cover_id
             life_db['comic'][episode][lang]['content'] = content_id
             # db_changed = True
 
     # if db_changed:
     with open('life/life.p', 'wb') as file:
-        pickle.dump(life_db, file, protocol=4)
+        pickle.dump(life_db, file, protocol=5)
     return True
 
 

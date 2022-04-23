@@ -39,7 +39,7 @@ def private_get_file_id(client, message):
     elif message.sticker:
         file_id = message.sticker.file_id
     elif message.photo:
-        file_id = message.photo[-1].file_id
+        file_id = message.photo.file_id
     elif message.animation:
         file_id = message.animation.file_id
     elif message.video:

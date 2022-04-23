@@ -5,5 +5,5 @@ services:
     container_name: dra
     volumes:
       - /home/kuma/bots/dra:/home/kuma/bots/dra
-      - /home/kuma/data/db:/home/kuma/data/db
+      - /home/kuma/data/vote:/home/kuma/data/vote
     restart: unless-stopped
