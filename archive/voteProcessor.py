@@ -1,10 +1,10 @@
 import os
 import json
-from botSession import dra
+from session import dra
 from voteGenerator import gen_reply_markup
 
 
-def process_callback(update, context):
+def process_callback(client, message):
     """
     Steps:
     1. Edit vote data

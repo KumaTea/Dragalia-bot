@@ -1,16 +1,17 @@
-# import botCache
-# from botDB import groups
 import logging
-from botTools import mkdir
-from botSession import scheduler
+from tools import mkdir
+from session import scheduler
 from register import register_handlers, manager
 
 
 def starting():
-    mkdir(['tmp', 'life'])
-    # for group in groups:
-    #     botCache.last_msg_time[group] = 0
+    logging.basicConfig(
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        level=logging.INFO,
+        datefmt='%Y-%m-%d %H:%M:%S')
+
+    mkdir(['tmp', 'life', '../vote'])
     register_handlers()
     manager()
     scheduler.start()
-    logging.warning('Starting fine.')
+    return logging.info("Initialized.")

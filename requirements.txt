@@ -1,5 +1,4 @@
-flask
-requests
-python-telegram-bot
-apscheduler
 Pillow
+pyrogram
+requests
+apscheduler

@@ -1,28 +1,26 @@
-import botSession
-from mdFunctions import *
-from mdMessage import process_msg
-from mdComic import life, sync_life
-from telegram.ext import MessageHandler, CommandHandler, Filters
+import logging
+from functions import *
+from pyrogram import filters
+from process_msg import process_msg
+from session import dra, scheduler
+from comic import life, sync_life
+from pyrogram.handlers import MessageHandler
 
 
 def register_handlers():
-    dp = botSession.dp
+    dra.add_handler(MessageHandler(life, filters.command(['life', 'comic']) & ~filters.edited))
+    dra.add_handler(MessageHandler(send_time, filters.command(['time', 'timer', 'when', 'hour']) & ~filters.edited))
+    dra.add_handler(MessageHandler(private_start, filters.command(['start']) & filters.private & ~filters.edited))
+    dra.add_handler(MessageHandler(private_help, filters.command(['help']) & filters.private & ~filters.edited))
+    dra.add_handler(MessageHandler(help_english, filters.command(['en', 'Eng', 'English']) & filters.private & ~filters.edited))
+    dra.add_handler(MessageHandler(help_japanese, filters.command(['ja', 'Japanese']) & filters.private & ~filters.edited))
 
-    dp.add_handler(CommandHandler(['delay', 'ping'], delay))
-    dp.add_handler(CommandHandler(['life', 'comic'], life))
-    dp.add_handler(CommandHandler(['time', 'timer', 'when', 'hour'], send_time))
-    dp.add_handler(CommandHandler('start', private_start, Filters.chat_type.private))
-    dp.add_handler(CommandHandler('help', private_help, Filters.chat_type.private))
-    dp.add_handler(CommandHandler(['en', 'Eng', 'English'], help_english, Filters.chat_type.private))
-    dp.add_handler(CommandHandler(['ja', 'Japanese'], help_japanese, Filters.chat_type.private))
+    dra.add_handler(MessageHandler(process_msg, filters.group & ~filters.edited))
+    dra.add_handler(MessageHandler(private_message, filters.private & ~filters.edited))
 
-    dp.add_handler(MessageHandler(Filters.chat_type.groups, process_msg))
-    dp.add_handler(MessageHandler((Filters.command & Filters.chat_type.private), private_unknown))
-    dp.add_handler(MessageHandler(Filters.chat_type.private, private_message))
-
-    return True
+    return logging.info('Registered handlers')
 
 
 def manager():
-    scheduler = botSession.scheduler
     scheduler.add_job(sync_life, 'cron', hour=14, minute=1)
+    return logging.info('Added job')

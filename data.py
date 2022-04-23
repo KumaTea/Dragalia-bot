@@ -1,11 +1,10 @@
-from botInfo import version, channel
+from info import version, channel
 
 
 start_message = '/help'
 help_message = f'这个bot可以：抓取和转发新闻到 @DragaliaNews\n' \
                f'获取轻松龙约 /life\n' \
                f'获取NGA论坛链接详情。\n' \
-               f'手动报时 /time\n' \
                f'欢迎加入群组 @dragaliazh\n\n/English /Japanese\n' \
                f'Ver.: {version} ({channel})'
 help_en = f'Read Dragalia Life: /life\n' \
@@ -23,12 +22,7 @@ groups = {
         'id': -1001157490282,
         'username': 'dragaliazh',
         'lang': 'chs'
-    },
-    #-1001342436432: {
-    #    'id': -1001342436432,
-    #    'username': 'Dragalia_Lost',
-    #    'lang': 'cht'
-    #}
+    }
 }
 
 lang_code = {

@@ -1,0 +1,9 @@
+version: "1.0"
+services:
+  bot:
+    image: kumatea/pyrogram:latest
+    container_name: dra
+    volumes:
+      - /home/kuma/bots/dra:/home/kuma/bots/dra
+      - /home/kuma/data/db:/home/kuma/data/db
+    restart: unless-stopped

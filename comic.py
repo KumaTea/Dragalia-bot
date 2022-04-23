@@ -3,10 +3,10 @@ import pickle
 import logging
 import requests
 from PIL import Image
-from botSession import dra
-from botTools import detect_lang
-from botInfo import player_group
-from telegram import InputMediaPhoto
+from session import dra
+from tools import detect_lang
+from info import player_group
+from pyrogram.types import InputMediaPhoto
 
 
 METHOD = 'POST'
@@ -249,9 +249,8 @@ def process_image(original):
     return cover, content
 
 
-def life(update, context):
-    message = update.message
-    chat_id = message.chat_id
+def life(client, message):
+    chat_id = message.chat.id
     text = message.text
 
     command = text.split(' ')
@@ -263,7 +262,7 @@ def life(update, context):
             return send_life(chat_id, int(command[1]))
         else:
             if 'help' in command[1]:
-                return update.message.reply_text(life_help, quote=False, parse_mode='Markdown')
+                return message.reply(life_help, parse_mode='Markdown')
             elif 'cover' in command[1]:
                 return send_life(chat_id, lang='cover')
             elif 're' in command[1]:
@@ -272,14 +271,14 @@ def life(update, context):
                 old = old_db['latest']
                 new = sync_life(False)['latest']
                 if new > old:
-                    return update.message.reply_text(f'刷新成功，最新期数为 /life {new}', quote=False)
+                    return message.reply(f'刷新成功，最新期数为 /life {new}')
                 else:
-                    return update.message.reply_text(f'刷新失败，最新期数为{old}。', quote=False)
+                    return message.reply(f'刷新失败，最新期数为{old}。')
             else:
                 for lang in languages:
                     if lang in command[1]:
                         return send_life(chat_id, lang=lang)
-                return update.message.reply_text('参数错误。请查看 `/life help`', quote=False, parse_mode='Markdown')
+                return message.reply('参数错误。请查看 `/life help`', parse_mode='Markdown')
     else:
         if command[1].isnumeric():
             if 'cover' in command[2]:
@@ -288,4 +287,4 @@ def life(update, context):
                 for lang in languages:
                     if lang in command[2]:
                         return send_life(chat_id, int(command[1]), lang)
-        return update.message.reply_text('参数错误。请查看 `/life help`', quote=False, parse_mode='Markdown')
+        return message.reply('参数错误。请查看 `/life help`', parse_mode='Markdown')

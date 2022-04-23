@@ -1,11 +1,7 @@
 __pycache__/
-.Python
-MANIFEST
 .ipynb_checkpoints
-.idea
 admin*
 token*
-localDB.py
-.DS_Store
-.vs
+local*
+*.ini
 life

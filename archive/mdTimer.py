@@ -1,8 +1,8 @@
 import botCache
-from botDB import groups
-from botSession import dra
+from data import groups
+from session import dra
 from datetime import datetime
-from botDB import timer_sticker
+from data import timer_sticker
 
 
 def timer():
